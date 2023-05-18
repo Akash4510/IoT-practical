@@ -10,3 +10,7 @@
 4. Light intensity measure and publish in Ubidots IoT cloud platform and subscribe from Ubidots IoT cloud platform using MQTT protocol.
 
 5. Room temperature and humidity publish in Thing speak IoT cloud server (using Raspberry Pi).
+
+6. Develop a python program to interface Touch sensor with Raspberry Pi. Create a Virtual LED in Ubidots IoT cloud platform. If anyone touch the sensor then Virtual LED will glow otherwise it will be OFF.
+
+7. Develop a python program for home automation using Raspberry Pi. Create a Virtual switch in Ubidots IoT cloud platform. If this Virtual switch is ON then LED will glow otherwise it will be OFF.
