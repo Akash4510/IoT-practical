@@ -1,23 +1,23 @@
 #include <ESP8266WiFi.h>
 #include <Ubidots.h>
 
-const char *UBIDOTS_TOKEN = "";
+const char *UBIDOTS_TOKEN = "YOUR_TOKEN_HERE";
+const char *DEVICE_LABEL = "DEVICE_LABEL";
+const char *VARIABLE_LABEL = "VARIABLE_LABEL";
+
 const char *WIFI_SSID = "";
 const char *WIFI_PASSWORD = "";
 
 Ubidots ubidotsClient(UBIDOTS_TOKEN);
 
-const char *DEVICE_LABEL = "MY_DEVICE";
-const char *VARIABLE_LABEL = "LDR_DATA";
-
-int ldrValue;
 const int ldrPin = A0;
+int ldrVal;
 
-void publishData(char *variableLabel, int value)
+void publishData(char *variableLabel, int val)
 {
   bool bufferSent = false;
 
-  ubidotsClient.add(variableLabel, value);
+  ubidotsClient.add(variableLabel, val);
   bufferSent = ubidotsClient.send();
 
   if (bufferSent)
@@ -32,7 +32,7 @@ void publishData(char *variableLabel, int value)
 
 void callback(char *topic, byte *payload, unsigned long length)
 {
-  Serial.print("\nMessage arrived: [");
+  Serial.print("Message arrived: [");
   Serial.print(topic);
   Serial.print("] ");
 
@@ -46,7 +46,7 @@ void callback(char *topic, byte *payload, unsigned long length)
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   ubidotsClient.wifiConnect(WIFI_SSID, WIFI_PASSWORD);
   ubidotsClient.begin(callback);
 }
@@ -59,12 +59,12 @@ void loop()
   }
   else
   {
-    ldrValue = analogRead(ldrPin);
-    Serial.println(ldrValue);
+    ldrVal = analogRead(ldrPin);
+    Serial.println(ldrVal);
 
-    publishData("ldr", ldrValue);
+    publishData(VARIABLE_LABEL, ldrVal);
   }
 
   ubidotsClient.loop();
-  delay(5000);
+  delay(15000);
 }

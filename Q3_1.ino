@@ -1,16 +1,19 @@
-#include <ESPS266WiFi.h>
+#include <ESP8266WiFi.h>
 #include <Ubidots.h>
 
-const char *UBIDOTS_TOKEN = "";
+const char *UBIDOTS_TOKEN = "YOUR_TOKEN_HERE";
+const char *DEVICE_LABEL = "DEVICE_LABEL";
+const char *VARIABLE_LABEL = "VARIABLE_LABEL";
+
 const char *WIFI_SSID = "";
 const char *WIFI_PASSWORD = "";
 
 Ubidots ubidotsClient(UBIDOTS_TOKEN, UBI_HTTP);
 
-int ldrValue;
 const int ldrPin = A0;
+int ldrValue;
 
-void publishData(char *variableLabel, int value)
+void publishData(variableLabel, value)
 {
   bool bufferSent = false;
 
@@ -29,7 +32,7 @@ void publishData(char *variableLabel, int value)
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   ubidotsClient.wifiConnect(WIFI_SSID, WIFI_PASSWORD);
 }
 
@@ -38,6 +41,6 @@ void loop()
   ldrValue = analogRead(ldrPin);
   Serial.println(ldrValue);
 
-  publishData("ldr", ldrValue);
-  delay(5000);
+  publishData(VARIABLE_LABEL, ldrValue);
+  delay(15000);
 }
